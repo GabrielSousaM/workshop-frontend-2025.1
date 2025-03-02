@@ -20,7 +20,6 @@ export default function CardList() {
           `https://api.pokemontcg.io/v2/cards?page=${page}&pageSize=20`
         );
         setCardData(response.data.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Erro ao buscar os cards:", error);
       } finally {
@@ -33,10 +32,12 @@ export default function CardList() {
 
   const nextPage = () => {
     setPage(page + 1);
+    setLoading(true)
   };
 
   const previousPage = () => {
     setPage(page - 1);
+    setLoading(true)
   };
 
   if (!isClient) return null;
@@ -85,14 +86,14 @@ export default function CardList() {
         </ul>
       )}
       <div
-        className={`fixed flex ${
+        className={`fixed flex pointer-events-none ${
           page == 1 ? "justify-end" : "justify-between"
         } p-5 w-full min-h-screen top-0 left-0`}
       >
         {page > 1 && (
           <button
             onClick={previousPage}
-            className="bg-blue-500 text-white h-10 px-4 py-2 rounded cursor-pointer"
+            className="bg-blue-500 text-white pointer-events-auto h-10 px-4 py-2 rounded cursor-pointer"
           >
             Anterior
           </button>
@@ -100,7 +101,7 @@ export default function CardList() {
         {page < 935 && (
           <button
             onClick={nextPage}
-            className="bg-blue-500 text-white h-10 px-4 py-2 rounded cursor-pointer"
+            className="bg-blue-500 text-white pointer-events-auto h-10 px-4 py-2 rounded cursor-pointer"
           >
             Próxima
           </button>
